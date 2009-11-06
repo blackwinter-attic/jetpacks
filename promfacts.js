@@ -21,7 +21,7 @@
 * @description Jetpack feature for prometheus Facts                           *
 * @author      Jens Wille <jens.wille@uni-koeln.de>                           *
 * @license     GPL                                                            *
-* @version     0.0.1                                                          *
+* @version     0.0.2                                                          *
 * @url         http://wiki.github.com/blackwinter/jetpacks/promfacts          *
 * @update      http://github.com/blackwinter/jetpacks/raw/master/promfacts.js *
 *                                                                             *
@@ -53,10 +53,10 @@ switch (Prom.lang) {
 
 Prom.facts = function(callback) {
   jQuery.get(Prom.url + '/?L=' + Prom.lang, function(data) {
+    data = jQuery(data, jetpack.tabs.focused.contentDocument);
     var facts;
 
-    //facts = $(data).find('#facts')
-    jQuery.each(jQuery.makeArray($(data)), function() {
+    data.each(function() {
       if (this.id == 'facts') {
         facts = $(this);
         return false;
