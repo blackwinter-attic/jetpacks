@@ -77,7 +77,6 @@ jetpack.statusBar.append({
 
   onReady: function(widget) {
     $('img', widget).css({
-      'padding-top': 3,
       cursor: 'pointer'
     });
 
