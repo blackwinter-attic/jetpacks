@@ -2,7 +2,7 @@
 *                                                                             *
 * promfacts -- Jetpack feature for prometheus Facts                           *
 *                                                                             *
-* Copyright (C) 2009 Jens Wille                                               *
+* Copyright (C) 2009-2010 Jens Wille                                          *
 *                                                                             *
 * promfacts is free software; you can redistribute it and/or modify it under  *
 * the terms of the GNU General Public License as published by the Free        *
@@ -21,71 +21,61 @@
 * @description Jetpack feature for prometheus Facts                           *
 * @author      Jens Wille <jens.wille@uni-koeln.de>                           *
 * @license     GPL                                                            *
-* @version     0.0.2                                                          *
+* @version     0.0.3                                                          *
 * @url         http://wiki.github.com/blackwinter/jetpacks/promfacts          *
 * @update      http://github.com/blackwinter/jetpacks/raw/master/promfacts.js *
 *                                                                             *
 ******************************************************************************/
 
-const prefs = Components.classes['@mozilla.org/preferences-service;1']
+var Prom = function() {
+  var prefs = Components.classes['@mozilla.org/preferences-service;1']
                         .getService(Components.interfaces.nsIPrefService)
                         .getBranch('jetpacks.promfacts.');
 
-var Prom = {};
+  var get_pref = function(key, deflt) {
+    var type = prefs.getPrefType(key);
+    return type === prefs.PREF_STRING ? prefs.getCharPref(key) : deflt;
+  };
 
-Prom.url  = 'http://prometheus-bildarchiv.de';
-Prom.icon = Prom.url + '/fileadmin/layout/favicon.ico';
-Prom.lang = prefs.getPrefType('lang') == prefs.PREF_STRING ? prefs.getCharPref('lang') : '1';
+  var url  = 'http://prometheus.uni-koeln.de/pandora',
+      lang = get_pref('lang', 'en'),
+      tr   = {};
 
-Prom.tr = {};
+  if (lang === 'de') {
+    tr.title = 'prometheus in Zahlen';
+    tr.none  = 'Keine gefunden';
+  }
+  else {
+    tr.title = 'prometheus Facts';
+    tr.none  = 'None found';
+  }
 
-switch (Prom.lang) {
-  case '0':  // de
-    Prom.tr.title = 'prometheus in Zahlen';
-    Prom.tr.none  = 'Keine gefunden';
-    break;
-
-  default:   // en
-    Prom.tr.title = 'prometheus Facts';
-    Prom.tr.none  = 'None found';
-    break;
-};
-
-Prom.facts = function(callback) {
-  jQuery.get(Prom.url + '/?L=' + Prom.lang, function(data) {
-    data = jQuery(data, jetpack.tabs.focused.contentDocument);
-    var facts;
-
-    data.each(function() {
-      if (this.id == 'facts') {
-        facts = $(this);
-        return false;
-      }
-    });
-
-    if (callback) {
-      callback(facts);
+  return {
+    icon:  url + '/favicon.ico',
+    tr:    tr,
+    facts: function(callback) {
+      jQuery.getJSON(url + '/' + lang + '/pandora.json', function(data) {
+        var facts = data.facts;
+        if (jQuery.isArray(facts) && facts.length > 0) {
+          callback(facts);
+        }
+      });
     }
-
-    return facts;
-  });
-};
+  };
+}();
 
 jetpack.statusBar.append({
-  html:  '<img src="' + Prom.icon + '" alt="' + Prom.tr.title + '">',
+  html: '<img src="' + Prom.icon + '" alt="promfacts">',
   width: 18,
 
   onReady: function(widget) {
-    $('img', widget).css({
-      cursor: 'pointer'
-    });
+    $('img', widget).css({ cursor: 'pointer' });
 
     $(widget).click(function() {
       Prom.facts(function(facts) {
         jetpack.notifications.show({
-          title: Prom.tr.title,
-          body:  facts ? jQuery.trim(facts.text()).replace(/\n\s*/g, ', ') : Prom.tr.none + ' :-(',
-          icon:  Prom.icon
+          title: Prom.tr.title, icon:  Prom.icon,
+          body:  facts ? facts.join('<br />') : Prom.tr.none + ' :-('
         });
       });
     });
