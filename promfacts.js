@@ -21,7 +21,7 @@
 * @description Jetpack feature for prometheus Facts                           *
 * @author      Jens Wille <jens.wille@uni-koeln.de>                           *
 * @license     GPL                                                            *
-* @version     0.0.3                                                          *
+* @version     0.0.4                                                          *
 * @url         http://wiki.github.com/blackwinter/jetpacks/promfacts          *
 * @update      http://github.com/blackwinter/jetpacks/raw/master/promfacts.js *
 *                                                                             *
@@ -38,8 +38,7 @@ var Prom = function() {
   };
 
   var url  = 'http://prometheus.uni-koeln.de/pandora',
-      lang = get_pref('lang', 'en'),
-      tr   = {};
+      lang = get_pref('lang', 'en'), tr = {};
 
   if (lang === 'de') {
     tr.title = 'prometheus in Zahlen';
@@ -51,13 +50,15 @@ var Prom = function() {
   }
 
   return {
-    icon:  url + '/favicon.ico',
-    tr:    tr,
+    icon:  url + '/favicon.ico', tr: tr,
     facts: function(callback) {
-      jQuery.getJSON(url + '/' + lang + '/pandora.json', function(data) {
-        var facts = data.facts;
-        if (jQuery.isArray(facts) && facts.length > 0) {
-          callback(facts);
+      jQuery.ajax({
+        type:    'GET', dataType: 'json',
+        url:     url + '/' + lang + '/pandora.json',
+        error:   function(xhr, status) { callback(); },
+        success: function(data) {
+          var facts = data.facts;
+          callback(jQuery.isArray(facts) && facts.length > 0 && facts);
         }
       });
     }
@@ -65,17 +66,18 @@ var Prom = function() {
 }();
 
 jetpack.statusBar.append({
-  html: '<img src="' + Prom.icon + '" alt="promfacts">',
-  width: 18,
-
+  html:    '<img src="' + Prom.icon + '" alt="promfacts">', width: 18,
   onReady: function(widget) {
     $('img', widget).css({ cursor: 'pointer' });
 
     $(widget).click(function() {
       Prom.facts(function(facts) {
         jetpack.notifications.show({
-          title: Prom.tr.title, icon:  Prom.icon,
-          body:  facts ? facts.join('<br />') : Prom.tr.none + ' :-('
+          title: Prom.tr.title, icon: Prom.icon,
+          body:  facts ? '<table>' + jQuery.map(facts, function(i) {
+            var cells = '<td align="right">$1</td><td></td><td>$2</td>';
+            return '<tr>' + i.replace(/(\S+)\s+(.+)/, cells) + '</tr>';
+          }).join('') + '</table>' : Prom.tr.none + ' :-('
         });
       });
     });
