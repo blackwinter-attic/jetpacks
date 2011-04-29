@@ -2,25 +2,25 @@
 *                                                                             *
 * promfacts -- Jetpack feature for prometheus Facts                           *
 *                                                                             *
-* Copyright (C) 2009-2010 Jens Wille                                          *
+* Copyright (C) 2009-2011 Jens Wille                                          *
 *                                                                             *
 * promfacts is free software; you can redistribute it and/or modify it under  *
-* the terms of the GNU General Public License as published by the Free        *
+* the terms of the GNU Affero General Public License as published by the Free *
 * Software Foundation; either version 3 of the License, or (at your option)   *
 * any later version.                                                          *
 *                                                                             *
 * promfacts is distributed in the hope that it will be useful, but WITHOUT    *
 * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or       *
-* FITNESSFOR A PARTICULAR PURPOSE. See the GNU General Public License for     *
-* more details.                                                               *
+* FITNESSFOR A PARTICULAR PURPOSE. See the GNU Affero General Public License  *
+* for more details.                                                           *
 *                                                                             *
-* You should have received a copy of the GNU General Public License along     *
-* with promfacts. If not, see <http://www.gnu.org/licenses/>.                 *
+* You should have received a copy of the GNU Affero General Public License    *
+* along with promfacts. If not, see <http://www.gnu.org/licenses/>.           *
 *                                                                             *
 * @title       prometheus Facts                                               *
 * @description Jetpack feature for prometheus Facts                           *
 * @author      Jens Wille <jens.wille@uni-koeln.de>                           *
-* @license     GPL                                                            *
+* @license     AGPL                                                           *
 * @version     0.0.4                                                          *
 * @url         http://wiki.github.com/blackwinter/jetpacks/promfacts          *
 * @update      http://github.com/blackwinter/jetpacks/raw/master/promfacts.js *

@@ -8,9 +8,9 @@ Only works with the old {Jetpack Prototype}[https://jetpack.mozillalabs.com/prot
 == LINKS
 
 <b></b>
-Jetpack::               <https://jetpack.mozillalabs.com/>
-Old Jetpack Prototype:: <https://jetpack.mozillalabs.com/prototype.html>
-Source code::           <http://github.com/blackwinter/jetpacks>
+Jetpack::               https://jetpack.mozillalabs.com/
+Old Jetpack Prototype:: https://jetpack.mozillalabs.com/prototype.html
+Source code::           http://github.com/blackwinter/jetpacks
 
 
 == AUTHORS
@@ -20,16 +20,17 @@ Source code::           <http://github.com/blackwinter/jetpacks>
 
 == LICENSE AND COPYRIGHT
 
-Copyright (C) 2009-2010 Jens Wille,
+Copyright (C) 2009-2011 Jens Wille
 
-jetpacks is free software: you can redistribute it and/or modify it under the
-terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
+jetpacks is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
 
-jetpacks is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+jetpacks is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+for more details.
 
-You should have received a copy of the GNU General Public License along with
-jetpacks. If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU Affero General Public License
+along with jetpacks. If not, see <http://www.gnu.org/licenses/>.
